@@ -1,0 +1,38 @@
+      ******************************************************************
+      * DCLGEN TABLE(F2401.FUNC)                                       *
+      *        LIBRARY(GR.F2401.BOOKLIB(BOOKFUNC))                     *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        NAMES(DB2-)                                             *
+      *        STRUCTURE(REG-FUNC)                                     *
+      *        QUOTE                                                   *
+      *        COLSUFFIX(YES)                                          *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE F2401.FUNC TABLE
+           ( IDFUNC                         INTEGER NOT NULL,
+             NOMEFUNC                       CHAR(30) NOT NULL,
+             DEPTOFUNC                      CHAR(3) NOT NULL,
+             SALFUNC                        DECIMAL(5, 2) NOT NULL,
+             FILHOSFUNC                     INTEGER,
+             ADMISFUNC                      DATE NOT NULL
+           ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE F2401.FUNC                         *
+      ******************************************************************
+       01  REG-FUNC.
+      *                       IDFUNC
+           10 DB2-IDFUNC           PIC S9(9) USAGE COMP.
+      *                       NOMEFUNC
+           10 DB2-NOMEFUNC         PIC X(30).
+      *                       DEPTOFUNC
+           10 DB2-DEPTOFUNC        PIC X(3).
+      *                       SALFUNC
+           10 DB2-SALFUNC          PIC S9(3)V9(2) USAGE COMP-3.
+      *                       FILHOSFUNC
+           10 DB2-FILHOSFUNC       PIC S9(9) USAGE COMP.
+      *                       ADMISFUNC
+           10 DB2-ADMISFUNC        PIC X(10).
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 6       *
+      ******************************************************************

@@ -1,0 +1,16 @@
+       01  WRK-MSGS.
+           05 WRK-ERRO-ABERTURA         PIC X(030)       VALUE
+               "ERRO NA ABERTURA  ".
+           05 WRK-ERRO-LEITURA          PIC X(030)       VALUE
+               "ERRO NA LEITURA   ".
+           05 WRK-ERRO-GRAVACAO         PIC X(030)       VALUE
+               "ERRO NA GRAVACAO  ".
+           05 WRK-ERRO-FECHAMENTO       PIC X(030)       VALUE
+               "ERRO NO FECHAMENTO".
+           05 WRK-ARQ-VAZIO             PIC X(030)       VALUE
+               "ARQUIVO VAZIO".
+           05 WRK-ARQ-CLIENTE           PIC X(030)       VALUE
+               "ARQUIVO CLIENTE VAZIO".
+           05 WRK-ARQ-LANCAM            PIC X(030)       VALUE
+               "ARQUIVO LANCAM VAZIO".
+

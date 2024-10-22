@@ -1,0 +1,10 @@
+      *-------------------- BOOK LOGDB2  *********************
+       01 WRK-DADOS-DB2.
+          05 WRK-PROGRAMA-DB2          PIC X(08) VALUE SPACES.
+          05 WRK-TABELA-DB2            PIC X(20) VALUE SPACES.
+          05 WRK-SECAO-DB2             PIC X(04) VALUE SPACES.
+          05 WRK-MENSAGEM-DB2          PIC X(20) VALUE SPACES.
+          05 WRK-SQLCODE-DB2           PIC X(03) VALUE SPACES.
+          05 WRK-DATA-DB2              PIC X(08) VALUE SPACES.
+          05 WRK-HORA-DB2              PIC X(06) VALUE SPACES.
+       01 WRK-PROGRAMA-LOGDB2          PIC X(08) VALUE "GRAVADB2".

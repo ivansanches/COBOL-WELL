@@ -1,0 +1,4 @@
+       01 REG-RELSAI.                                                   00010000
+          05 REG-RELSAI-AGENCIA        PIC X(009).                      00020000
+          05 REG-RELSAI-NOME           PIC X(020).                      00030000
+          05 REG-RELSAI-SALDO          PIC 9(006).                      00040000

@@ -1,0 +1,6 @@
+       01  REG-ARQVSAM.
+           05 REG-ARQVSAM-CHAVE        PIC  X(003).
+           05 REG-ARQVSAM-NOME         PIC  X(020).
+           05 REG-ARQVSAM-EMAIL        PIC  X(020).
+           05 REG-ARQVSAM-STREAM       PIC  X(010).
+           05 REG-ARQVSAM-VALASS       PIC  9(005).

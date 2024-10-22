@@ -1,0 +1,7 @@
+       01  REG-RELFUNC.
+               05 RELFUNC-ID               PIC 9(009).
+               05 RELFUNC-NOME             PIC X(030).
+               05 RELFUNC-DEPTO            PIC X(003).
+               05 RELFUNC-SALARIO          PIC 9(003)V99.
+               05 RELFUNC-FILHOS           PIC 9(009).
+               05 RELFUNC-ADIMIS           PIC 9(010).

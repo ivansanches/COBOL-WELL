@@ -1,0 +1,10 @@
+      *-------------------- BOOK LOGERRO *********************
+       01 WRK-DADOS.
+          05 WRK-PROGRAMA              PIC X(08) VALUE SPACES.
+          05 WRK-ARQUIVO               PIC X(08) VALUE SPACES.
+          05 WRK-SECAO                 PIC X(04) VALUE SPACES.
+          05 WRK-MENSAGEM              PIC X(30) VALUE SPACES.
+          05 WRK-STATUS                PIC X(02) VALUE SPACES.
+          05 WRK-DATA                  PIC X(08) VALUE SPACES.
+          05 WRK-HORA                  PIC X(06) VALUE SPACES.
+       01 WRK-PROGRAMA-LOGERRO         PIC X(08) VALUE "GRAVALOG".
