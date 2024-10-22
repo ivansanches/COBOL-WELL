@@ -1,0 +1,7 @@
+//F2401MAP JOB 'COMP MAPA',MSGCLASS=X,CLASS=C,NOTIFY=&SYSUID            00010005
+//*================================================================     00020004
+//* JCL PARA COMPILAR MAPAS                                             00030004
+//*  NAME - SEU MAPA   -   INSTR = SUA CHAVE                            00040004
+//*================================================================     00050004
+//         JCLLIB ORDER=GR.GERAL.PROCLIB                                00060004
+//MAPSAMP  EXEC DFHMAPCS,NAME=F2401M1,INSTR='F2401'                     00070005

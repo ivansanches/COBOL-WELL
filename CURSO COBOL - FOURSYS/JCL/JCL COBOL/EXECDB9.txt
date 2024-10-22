@@ -1,0 +1,22 @@
+//F2401EDB JOB 'COMPDB2',MSGCLASS=X,CLASS=C,NOTIFY=&SYSUID,TIME=(0,01)
+//*-------------------------------------------------------------------*
+//*      JOB DE EXECUCAO   DE PROGRAMA COBOL COM DB2 BATCH            *
+//*-------------------------------------------------------------------*
+//EXECDB   EXEC PGM=IKJEFT01,DYNAMNBR=20
+//STEPLIB  DD   DSN=DSN810.SDSNLOAD,DISP=SHR
+//         DD   DSN=GR.GERAL.LOADLIB,DISP=SHR
+//DBRMLIB  DD   DSN=DSN810.DBRMLIB.DATA,DISP=SHR
+//LOGDB2   DD  DSN=GR.F2401.LOGDB2,DISP=SHR
+//SYSTSPRT DD   SYSOUT=*
+//SYSPRINT DD   SYSOUT=*
+//*YSOUT   DD   SYSOUT=*
+//SYSTSIN  DD   *
+  DSN  SYSTEM(DB8G)
+  RUN PROGRAM(F2401DB9) PLAN(F2401DB9) -
+       LIB('GR.GERAL.LOADLIB')
+  END
+//*************************************************
+//*  INCLUIR ABAIXO OS DEMAIS ARQUIVOS DO SEU JOB *
+//*************************************************
+//SYSIN  DD  *
+000000090WELLINGTON SOARES             MKT100500000000032022-08-24

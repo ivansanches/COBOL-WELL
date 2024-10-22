@@ -1,0 +1,106 @@
+      *================================================================*
+       IDENTIFICATION                  DIVISION.
+      *================================================================*
+       PROGRAM-ID.                     F2400P11.
+      *================================================================*
+      *----------------------------------------------------------------*
+      * VSAM- EXEMPLO DE LEITURA DE TODO O ARQUIVO
+      *----------------------------------------------------------------*
+      *================================================================*
+       ENVIRONMENT                     DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       CONFIGURATION                   SECTION.
+      *----------------------------------------------------------------*
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+      *----------------------------------------------------------------*
+       INPUT-OUTPUT                    SECTION.
+      *----------------------------------------------------------------*
+       FILE-CONTROL.
+           SELECT ARQVSAM ASSIGN TO ARQVSAM
+             ORGANIZATION  IS INDEXED
+             ACCESS MODE   IS SEQUENTIAL
+             RECORD KEY    IS REG-ARQVSAM-CHAVE
+             FILE STATUS   IS FS-ARQVSAM.
+
+      *----------------------------------------------------------------*
+      *     ARQVSAM - CHAVE -> CODIGO DO CLIENTE 03 PRIMEIRAS POSICOES
+      *----------------------------------------------------------------*
+
+      *================================================================*
+       DATA                            DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       FILE                            SECTION.
+      *----------------------------------------------------------------*
+       FD  ARQVSAM.
+       COPY 'BOOKVSA'.
+
+      *----------------------------------------------------------------*
+       WORKING-STORAGE                 SECTION.
+      *----------------------------------------------------------------*
+       01  FS-ARQVSAM                  PIC  9(002).
+       01  ACU-LIDOS                   PIC  9(002) COMP-3  VALUE ZEROS.
+      *================================================================*
+       PROCEDURE                       DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       0001-PRINCIPAL                  SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0100-INICIAR.
+
+           PERFORM 0200-PROCESSAR UNTIL FS-ARQVSAM EQUAL 10.
+
+           PERFORM 0300-FINALIZAR.
+
+       0001-PRINCIPAL-FIM.             EXIT.
+
+      *----------------------------------------------------------------*
+       0100-INICIAR                    SECTION.
+      *----------------------------------------------------------------*
+
+           OPEN INPUT ARQVSAM.
+
+           IF FS-ARQVSAM NOT EQUAL 0
+              DISPLAY "ARQUIVO ARQVSAM NAO FOI ABERTO"
+              GOBACK
+           END-IF.
+
+           READ ARQVSAM.
+
+       0100-INICIAR-FIM.               EXIT.
+
+      *----------------------------------------------------------------*
+       0200-PROCESSAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           IF FS-ARQVSAM NOT EQUAL 00
+              DISPLAY "ERRO NA LEITURA " FS-ARQVSAM
+           ELSE
+              DISPLAY REG-ARQVSAM
+              ADD 1                    TO ACU-LIDOS
+           END-IF.
+
+           READ ARQVSAM.
+
+       0200-PROCESSAR-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       0300-FINALIZAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           CLOSE ARQVSAM.
+
+           IF ACU-LIDOS GREATER 0
+              DISPLAY "====== STATISTICA ======"
+              DISPLAY "TOTAL DE REGISTROS LIDOS: " ACU-LIDOS
+           END-IF.
+
+           IF FS-ARQVSAM NOT EQUAL 0
+              DISPLAY "ERRO NO FECHAMENTO DO ARQUIVO ARQVSAM"
+           END-IF.
+
+           GOBACK.
+
+       0300-FINALIZAR-FIM.             EXIT.

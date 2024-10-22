@@ -1,0 +1,396 @@
+       IDENTIFICATION                  DIVISION.
+       PROGRAM-ID.                     F2401P14.
+      *================================================================*
+      *== PROGRAMA..... : F2401P14
+      *== PROGRAMADOR.. : WELLINGTON SOARES CORDEIRO
+      *== ANALISTA..... : IVAN SANCHES
+      *== CONSULTORIA.. : FOURSYS
+      *== DATA......... : 03 / 09 / 2024
+      *----------------------------------------------------------------*
+      *== OBJETIVO......: ESSE PROGRAMA TEM A FINALIDADE A PARTIR DO
+      *               RECEBIMENTO DE UMA SEQUENCIA(ACAO + LAYOUT)
+      *               REALIZAR AS OPERACOES DE: (L)EITURA DE 1 REGISTRO,
+      *              (G)RAVACAO DE 1 REGISTRO, (E)XCLUSAO DE 1 REGISTRO,
+      *              (R)EGRAVACAO DE 1 REGISTRO.
+      *----------------------------------------------------------------*
+      *== ARQUIVO.......:
+      *   DDNAME........:         TIPO....:            BOOK...:
+      *
+      *   ARQVSAM                 INPUT                BOOKVSA
+      *----------------------------------------------------------------*
+      *== INCS..........:
+      *
+      *   BOOKMSG - VARIAVEIS PARA MENSAGENS DE ERRO
+      *   BOOKLOG - AREA DE FORMATACAO DE ERRO -> GRAVALOG
+      *----------------------------------------------------------------*
+      *== MODULOS...... :
+      *
+      *   GRAVALOG
+      *================================================================**
+       ENVIRONMENT                     DIVISION.
+      *================================================================**
+      *----------------------------------------------------------------**
+       CONFIGURATION                   SECTION.
+      *----------------------------------------------------------------**
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+      *----------------------------------------------------------------**
+       INPUT-OUTPUT                    SECTION.
+      *----------------------------------------------------------------**
+       FILE-CONTROL.
+           SELECT ARQVSAM ASSIGN TO ARQVSAM
+            ORGANIZATION  IS INDEXED
+            ACCESS MODE   IS DYNAMIC
+            RECORD KEY    IS REG-ARQVSAM-CHAVE
+            FILE STATUS   IS FS-ARQVSAM.
+      *================================================================**
+       DATA                            DIVISION.
+      *================================================================**
+      *----------------------------------------------------------------**
+       FILE                            SECTION.
+      *----------------------------------------------------------------**
+      *        INPUT -  DADOS DO ARQUIVO DE ENTRADA(ARQVSAM)
+      *                               LRECL = 58
+      *----------------------------------------------------------------**
+       FD  ARQVSAM.
+       COPY 'BOOKVSA'.
+      *----------------------------------------------------------------*
+       WORKING-STORAGE                 SECTION.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** INICIO DA WORKING *****'.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           "***** VARIAVEL DE STATUS ***** ".
+      *----------------------------------------------------------------*
+       01 FS-ARQVSAM                   PIC 9(002).
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** VARIAVEL DE APOIO ***** '.
+      *----------------------------------------------------------------*
+       01 WRK-MSG-ERRO                 PIC X(030)          VALUE SPACES.
+       01 WRK-PRG-NOME                 PIC X(008)          VALUE
+           'F2401P14'.
+       01 WRK-ARQ-NOME                 PIC X(008)          VALUE
+           'ARQVSAM'.
+       01 WRK-STATS                    PIC 9(002)          VALUE ZEROS.
+       01 WRK-CONTADOR                 PIC 9(003)          VALUE ZEROS.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '*****  BOOKS *****'.
+      *-------------------- BOOKS -------------------------------------*
+       COPY BOOKERRO.
+       COPY BOOKLOG.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** FIM DA WORKING *****'.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------**
+       LINKAGE                         SECTION.
+      *----------------------------------------------------------------**
+       01  LNK-LAYOUT.
+           05 LNK-DIGITO               PIC X(002).
+           05 LNK-ACAO                 PIC X(001).
+           05 LNK-DADOS-ENTRADA.
+              10 LNK-CHAVE             PIC X(003).
+              10 LNK-NOME              PIC X(020).
+              10 LNK-EMAIL             PIC X(020).
+              10 LNK-STREAM            PIC X(010).
+              10 LNK-VALOR             PIC 9(005).
+      *================================================================*
+       PROCEDURE                       DIVISION USING  LNK-LAYOUT.
+      *================================================================*
+       0000-PRINCIPAL                  SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0100-INICIAR.
+
+           PERFORM 0200-PROCESSAR
+
+           PERFORM 0300-FINALIZAR.
+
+       0000-PRINCIPAL-FIM.             EXIT.
+
+      *----------------------------------------------------------------*
+       0100-INICIAR                    SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0210-CONSISTIR-CAMPO.
+
+           IF WRK-STATS GREATER 0
+      *       DISPLAY "CHAVE OU ACAO EM ERRADA"
+              GOBACK
+           ELSE
+              OPEN I-O ARQVSAM
+              IF FS-ARQVSAM NOT EQUAL 00
+                 MOVE '0100'                 TO WRK-SECAO
+                 MOVE WRK-ERRO-ABERTURA      TO WRK-MENSAGEM
+                 DISPLAY "ERRO NA ABERTURA ARQVSAM"
+                 PERFORM 9999-TRATA-ERRO
+              END-IF
+           END-IF.
+
+           MOVE LNK-CHAVE              TO REG-ARQVSAM-CHAVE.
+           READ ARQVSAM.
+
+       0100-INICIAR-FIM.               EXIT.
+
+      *----------------------------------------------------------------*
+       0110-TESTAR-STATUS              SECTION.
+      *----------------------------------------------------------------*
+
+           IF FS-ARQVSAM NOT EQUAL 00 AND FS-ARQVSAM NOT EQUAL 23
+              MOVE WRK-PRG-NOME        TO WRK-PROGRAMA
+              MOVE WRK-ARQ-NOME        TO WRK-ARQUIVO
+              MOVE FS-ARQVSAM          TO WRK-STATS
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+       0110-TESTAR-STATUS-FIM.                   EXIT.
+
+      *----------------------------------------------------------------*
+       0130-LER-DADOS                  SECTION.
+      *----------------------------------------------------------------*
+
+           READ ARQVSAM.
+           IF FS-ARQVSAM NOT EQUAL 00 AND FS-ARQVSAM NOT EQUAL 23
+              MOVE '0130'             TO WRK-SECAO
+              MOVE WRK-ERRO-LEITURA   TO WRK-MENSAGEM
+              PERFORM 0110-TESTAR-STATUS
+           END-IF.
+
+       0130-LER-DADOS-FIM.             EXIT.
+
+      *----------------------------------------------------------------*
+       0200-PROCESSAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE LNK-ACAO
+              WHEN "L"
+                 PERFORM 0220-LEITURA
+
+              WHEN "G"
+                 PERFORM 0215-CONSISTIR-CAMPO2
+                 IF WRK-STATS EQUAL 0
+                    PERFORM 0230-GRAVACAO
+                 END-IF
+
+              WHEN "E"
+                 PERFORM 0240-EXCLUSAO
+
+              WHEN "R"
+                 PERFORM 0215-CONSISTIR-CAMPO2
+                 IF WRK-STATS          EQUAL 0
+                    PERFORM 0250-RENOMEAR
+                 END-IF
+
+              WHEN OTHER
+                 DISPLAY "ERRO! INSIRA VALORES VALIDOS."
+              END-EVALUATE.
+
+       0200-PROCESSAR-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       0210-CONSISTIR-CAMPO           SECTION.
+      *----------------------------------------------------------------*
+
+           IF LNK-ACAO EQUAL SPACES
+              DISPLAY "ACAO INVALIDA DIGITE NOVAMENTE"
+              ADD 1                    TO WRK-STATS
+           END-IF.
+
+           IF LNK-CHAVE EQUAL SPACES
+              DISPLAY "CODIGO INVALIDO DIGITE NOVEMENTE"
+              ADD 1                    TO WRK-STATS
+           END-IF.
+
+       0210-CONSISTIR-CAMPO-FIM.       EXIT.
+      *----------------------------------------------------------------*
+       0215-CONSISTIR-CAMPO2           SECTION.
+      *----------------------------------------------------------------*
+           MOVE 0                      TO WRK-STATS
+
+           IF LNK-NOME EQUAL SPACES
+              ADD  1                   TO WRK-STATS
+              DISPLAY "IMPOSSIVEL GRAVAR, CAMPO NOME INVALIDO"
+           END-IF.
+
+           IF LNK-EMAIL EQUAL SPACES
+              ADD  1                   TO WRK-STATS
+           END-IF.
+
+           IF LNK-STREAM EQUAL SPACES
+              ADD  1                   TO WRK-STATS
+           END-IF.
+
+           IF LNK-VALOR IS NOT NUMERIC
+              ADD  1                   TO WRK-STATS
+              DISPLAY "IMPOSSIVEL GRAVAR, CAMPO VALOR INVALIDO"
+           END-IF.
+
+           IF WRK-STATS EQUAL 0
+
+              PERFORM 0216-VALIDACAO
+
+           END-IF.
+
+       0215-CONSISTIR-CAMPO2-FIM.      EXIT.
+      *----------------------------------------------------------------*
+       0216-VALIDACAO                  SECTION.
+      *----------------------------------------------------------------*
+      *---VALIDACAO DO NOME
+           PERFORM VARYING WRK-CONTADOR FROM 1 BY 1
+              UNTIL WRK-CONTADOR GREATER 20
+                 IF LNK-NOME(WRK-CONTADOR:1) EQUAL "#" OR
+                                             EQUAL "$" OR
+                                             EQUAL "%"
+                    MOVE " " TO LNK-NOME(WRK-CONTADOR:1)
+                 END-IF
+           END-PERFORM.
+
+      *---VALIDACAO DO EMAIL
+           PERFORM VARYING WRK-CONTADOR FROM 1 BY 1
+              UNTIL WRK-CONTADOR GREATER 20
+                 IF LNK-EMAIL(WRK-CONTADOR:1) EQUAL "#" OR
+                                              EQUAL "$" OR
+                                              EQUAL "%"
+                    MOVE " " TO LNK-EMAIL(WRK-CONTADOR:1)
+                 END-IF
+           END-PERFORM.
+
+      *---VALIDACAO DO STREAMING
+           PERFORM VARYING WRK-CONTADOR FROM 1 BY 1
+              UNTIL WRK-CONTADOR GREATER 10
+                 IF LNK-STREAM(WRK-CONTADOR:1) EQUAL "#" OR
+                                               EQUAL "$" OR
+                                               EQUAL "%"
+                    MOVE " " TO LNK-STREAM(WRK-CONTADOR:1)
+                 END-IF
+           END-PERFORM.
+
+      *----------------------------------------------------------------*
+       0220-LEITURA                    SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE FS-ARQVSAM
+           WHEN 00
+                 DISPLAY "CHAVE ACHADA:" REG-ARQVSAM
+
+           WHEN 23
+                 DISPLAY "CHAVE NAO EXISTE"
+
+           WHEN OTHER
+                 DISPLAY "ERRO NA LEITURA"
+                 DISPLAY "STATUS" FS-ARQVSAM
+                 MOVE WRK-PRG-NOME      TO WRK-PROGRAMA
+                 MOVE WRK-ARQ-NOME      TO WRK-ARQUIVO
+                 MOVE FS-ARQVSAM        TO WRK-STATS
+                 MOVE "0220"            TO WRK-SECAO
+                 MOVE "ERRO NA LEITURA" TO WRK-MENSAGEM
+                 PERFORM 9999-TRATA-ERRO
+           END-EVALUATE.
+
+       0220-LEITURA-FIM.               EXIT.
+      *----------------------------------------------------------------*
+       0230-GRAVACAO                   SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE FS-ARQVSAM
+
+           WHEN NOT 00
+              WRITE REG-ARQVSAM FROM LNK-DADOS-ENTRADA
+              DISPLAY "REGISTRO GRAVADO:" REG-ARQVSAM
+
+           WHEN 00
+              DISPLAY "REGISTRO JA EXISTE"
+
+           WHEN OTHER
+              DISPLAY "ERRO NA GRAVACAO"
+              DISPLAY "STATUS" FS-ARQVSAM
+              MOVE WRK-PRG-NOME        TO WRK-PROGRAMA
+              MOVE WRK-ARQ-NOME        TO WRK-ARQUIVO
+              MOVE FS-ARQVSAM          TO WRK-STATS
+              MOVE "0230"              TO WRK-SECAO
+              MOVE "ERRO GRAVACAO"     TO WRK-MENSAGEM
+              PERFORM 9999-TRATA-ERRO
+
+           END-EVALUATE.
+
+       0230-GRAVACAO-FIM.              EXIT.
+      *----------------------------------------------------------------*
+       0240-EXCLUSAO                   SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE FS-ARQVSAM
+
+           WHEN 00
+              DELETE ARQVSAM
+              DISPLAY "REGISTRO EXCLUIDO:" REG-ARQVSAM
+
+           WHEN 23
+              DISPLAY "REGISTRO NAO EXISTE"
+
+           WHEN OTHER
+              DISPLAY "ERRO NA EXCLUSAO"
+              DISPLAY "STATUS" FS-ARQVSAM
+              MOVE WRK-PRG-NOME        TO WRK-PROGRAMA
+              MOVE WRK-ARQ-NOME        TO WRK-ARQUIVO
+              MOVE FS-ARQVSAM          TO WRK-STATS
+              MOVE "0240"              TO WRK-SECAO
+              MOVE "ERRO EXCLUSAO"     TO WRK-MENSAGEM
+              PERFORM 9999-TRATA-ERRO
+
+           END-EVALUATE.
+
+       0240-EXCLUSAO-FIM.              EXIT.
+      *----------------------------------------------------------------*
+       0250-RENOMEAR                   SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE FS-ARQVSAM
+
+           WHEN 00
+              REWRITE REG-ARQVSAM FROM LNK-DADOS-ENTRADA
+              DISPLAY "REGISTRO ALTERADO:" REG-ARQVSAM
+
+           WHEN 23
+              DISPLAY "REGISTRO NAO EXISTE"
+
+           WHEN OTHER
+              DISPLAY "ERRO NA ALTERACAO"
+              DISPLAY "STATUS" FS-ARQVSAM
+              MOVE WRK-PRG-NOME        TO WRK-PROGRAMA
+              MOVE WRK-ARQ-NOME        TO WRK-ARQUIVO
+              MOVE FS-ARQVSAM          TO WRK-STATS
+              MOVE "0250"              TO WRK-SECAO
+              MOVE "ERRO ALTERACA0"    TO WRK-MENSAGEM
+              PERFORM 9999-TRATA-ERRO
+
+           END-EVALUATE.
+
+       0250-RENOMEAR-FIM.              EXIT.
+      *----------------------------------------------------------------*
+       0300-FINALIZAR                  SECTION.
+      *----------------------------------------------------------------**
+           CLOSE ARQVSAM.
+
+           MOVE '0300'                 TO WRK-SECAO.
+           MOVE WRK-ERRO-FECHAMENTO    TO WRK-MENSAGEM.
+
+           PERFORM 0110-TESTAR-STATUS.
+
+           GOBACK.
+
+       0300-FINALIZAR-FIM.             EXIT.
+
+      *----------------------------------------------------------------**
+       9999-TRATA-ERRO                 SECTION.
+      *----------------------------------------------------------------*
+
+           MOVE WRK-PRG-NOME        TO WRK-PROGRAMA
+           MOVE WRK-ARQ-NOME        TO WRK-ARQUIVO
+           MOVE FS-ARQVSAM          TO WRK-STATS
+
+           CALL WRK-PROGRAMA-LOGERRO USING WRK-DADOS.
+           GOBACK.
+
+       9999-TRATA-ERRO-FIM.            EXIT.

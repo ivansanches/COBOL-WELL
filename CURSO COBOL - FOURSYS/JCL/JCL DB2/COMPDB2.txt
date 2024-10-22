@@ -1,0 +1,16 @@
+//F2401CDB JOB 'COMPDB2',MSGCLASS=X,CLASS=C,NOTIFY=&SYSUID
+//*-------------------------------------------------------------------*
+//*      JOB DE COMPILACAO DE PROGRAMA COBOL COM DB2 BATCH            *
+//*      NAME = SEU PROGRAMA  -   INSTR = SUA CHAVE
+//*-------------------------------------------------------------------*
+//         JCLLIB ORDER=GR.GERAL.PROCLIB
+//COMPDB2 EXEC DFHCODB2,NAME=F2401DB9,INSTR=F2401
+//LKED.SYSIN    DD   *
+  NAME F2401DB9(R)
+//*
+//BIND.SYSTSIN  DD *
+DSN  SYSTEM(DB8G)
+BIND PLAN(F2401DB9) MEM(F2401DB9) ACT(REP) ISOLATION(CS) -
+       LIB('DSN810.DBRMLIB.DATA')
+END
+//*

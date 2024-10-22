@@ -1,0 +1,8 @@
+ARTHUR CARRILLO     ARTHUR@UOL.COM.BR             JAVA           007070
+CARLOS ALBERTO      CARLOS@UOL.COM.BR             JAVA           001010
+IVES GRANDRA        IVESGR@BOL.COM.BR             JAVA           004040
+JOSUE ALMEIDA       JOSUEA@REL.COM.BR             COBOL          008080
+LUIS CALDAS         LUISCA@REL.COM.BR             COBOL          005050
+PAULA DE SOUZA      PAULAD@REL.COM.BR             JAVA           003030
+SERGIO BUARQUE      SERGIOBBOL.COM.BR             JAVA           006060
+SILVIO SANTOS       SILVIO@BOL.COM.BR             COBOL          002020

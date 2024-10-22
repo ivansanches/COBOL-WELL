@@ -1,0 +1,58 @@
+       IDENTIFICATION                  DIVISION.                        00010001
+       PROGRAM-ID.                     F2401DB2.                        00020001
+      *================================================================ 00030001
+       ENVIRONMENT                     DIVISION.                        00040001
+      *================================================================ 00050001
+      *================================================================ 00070001
+       DATA                            DIVISION.                        00080001
+      *================================================================ 00090001
+      *---------------------------------------------------------------- 00100001
+       WORKING-STORAGE                 SECTION.                         00101001
+      *---------------------------------------------------------------- 00101201
+                                                                        00101501
+           EXEC SQL                                                     00102001
+              INCLUDE SQLCA                                             00103001
+           END-EXEC.                                                    00104001
+           EXEC SQL                                                     00106001
+              INCLUDE BOOKFUNC                                          00107001
+           END-EXEC.                                                    00108001
+
+       01 WRK-ID                       PIC 9(005)       VALUE ZEROS.    00109001
+       01 WRK-SQLCODE                  PIC -999         VALUE ZEROS.    00109001
+       01 WRK-NULO                     PIC S9(004) COMP VALUE ZEROS.    00109001
+
+      *================================================================ 00110001
+       PROCEDURE                       DIVISION.                        00120001
+      *================================================================ 00130001
+           ACCEPT WRK-ID.                                               00131101
+           MOVE WRK-ID TO DB2-IDFUNC.
+           MOVE SQLCODE TO WRK-SQLCODE.
+
+           EXEC SQL                                                     00132001
+              SELECT IDFUNC,NOMEFUNC,DEPTOFUNC,SALFUNC,FILHOSFUNC,      00133001
+                     ADMISFUNC
+               INTO :DB2-IDFUNC,                                        00134001
+                    :DB2-NOMEFUNC,
+                    :DB2-DEPTOFUNC,
+                    :DB2-SALFUNC,
+                    :DB2-FILHOSFUNC INDICATOR :WRK-NULO,
+                    :DB2-ADMISFUNC
+               FROM F2401.FUNC                                          00135001
+               WHERE IDFUNC =:DB2-IDFUNC                                00140001
+           END-EXEC.                                                    00150001
+                                                                        00151001
+           IF WRK-NULO EQUAL -1
+              MOVE 0 TO DB2-FILHOSFUNC
+           END-IF.
+
+           IF SQLCODE EQUAL 0                                           00152001
+              DISPLAY 'NOME: '    DB2-NOMEFUNC                          00153001
+              DISPLAY 'SALARIO: ' DB2-SALFUNC                           00153001
+              DISPLAY 'FILHOS: '  DB2-FILHOSFUNC                        00153001
+           END-IF.                                                      00154001
+                                                                        00154101
+           IF SQLCODE EQUAL 100                                         00154201
+              DISPLAY 'NAO ENCONTRADO'                                  00155001
+           END-IF.                                                      00156001
+                                                                        00157001
+           STOP RUN.                                                    00160001

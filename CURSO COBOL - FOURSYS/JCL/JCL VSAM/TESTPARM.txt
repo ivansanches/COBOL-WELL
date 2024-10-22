@@ -1,0 +1,63 @@
+//F2401E14 JOB 'EXECUT',CLASS=C,MSGCLASS=X,NOTIFY=&SYSUID,TIME=(0,02)
+//*-----------------------------------------------------------------
+//*         1O TESTE - CHAVE VAZIA
+//*-----------------------------------------------------------------
+//STEP001  EXEC PGM=F2401P14,PARM=' 001ROSENEIDE$% SOARES  ROSENE@GMAIL
+//             .COM    NETFLIX   04990'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=GR.F2401.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=GR.F2401.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         2O TESTE - CODIGO VAZIO
+//*-----------------------------------------------------------------
+//STEP002  EXEC PGM=F2401P14,PARM='L   ROSENEIDE$% SOARES  ROSENE@GMAIL
+//             .COM    NETFLIX   04990'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         3O TESTE - GRAVAR COM TESTE DE SIMBOLOS
+//*-----------------------------------------------------------------
+//STEP003  EXEC PGM=F2401P14,PARM='G069ROSECLAIR$% SOARES  ROSCLA@GMAIL
+//             .COM    NETFLIX   04990'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         4O TESTE - REGRAVAR COM TESTE DE SIMBOLOS
+//*-----------------------------------------------------------------
+//STEP004  EXEC PGM=F2401P14,PARM='R069ROSINEIDE$% SAMPAIO ROSSAM@GMAIL
+//             .COM    NETFLIX   04990'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         5O TESTE - VALIDAR REGRAVACAO - LEITURA DE 1 EXISTENTE
+//*-----------------------------------------------------------------
+//STEP005  EXEC PGM=F2401P14,PARM='L069'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         6O TESTE - FORCAR LETRA EM CAMPO NUMERICO
+//*-----------------------------------------------------------------
+//STEP006  EXEC PGM=F2401P14,PARM='G065ROSECLAIR$% SOARES  ROSCLA@GMAIL
+//             .COM    NETFLIX   0B990'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         7O TESTE - GRAVAR EM BRANCO - TESTE
+//*-----------------------------------------------------------------
+//STEP007  EXEC PGM=F2401P14,PARM='G065                    ROSCLA@GMAIL
+//             .COM    NETFLIX   04990'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM  DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR
+//*-----------------------------------------------------------------
+//*         8O TESTE - SEM ARQUIVO NO DD
+//*-----------------------------------------------------------------
+//STEP008  EXEC PGM=F2401P14,PARM='L001'
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//ARQVSAM2 DD DSN=*.STEP001.ARQVSAM,DISP=SHR
+//LOGERROS DD DSN=*.STEP001.LOGERROS,DISP=SHR

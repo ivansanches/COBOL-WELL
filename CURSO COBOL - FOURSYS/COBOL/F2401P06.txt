@@ -1,0 +1,390 @@
+       IDENTIFICATION                  DIVISION.
+       PROGRAM-ID.                     F2401P06.
+      *================================================================*
+      *== PROGRAMA..... : F2401P06
+      *== PROGRAMADOR.. : WELLINGTON SOARES CORDEIRO
+      *== ANALISTA..... : IVAN SANCHES
+      *== CONSULTORIA.. : FOURSYS
+      *== DATA......... : 23 / 08 / 2024
+      *----------------------------------------------------------------*
+      *== OBJETIVO......: BALANCE LINE ENTRE OS ARQUIVOS CLIENTE2 E O
+      *   ARQUIVO LANCAM,E AO FINAL GRAVAR SALDO ATUALIZADO NO RELSAI.
+      *----------------------------------------------------------------*
+      *== ARQUIVO.......:
+      *   DDNAME........:         TIPO....:            BOOK...:
+      *
+      *   CLIENTE2                INPUT                BOOKCLI
+      *   LANCAM                  INPUT                BOOKLAN
+      *   RELSAI                  OUTPUT               BOOKREL
+      *----------------------------------------------------------------*
+      *== INCS..........:
+      *
+      *   BOOKERRO - VARIAVEIS PARA MENSAGENS DE ERRO
+      *   BOOKLOG  - AREA DE FORMATACAO DE ERRO -> GRAVALOG
+      *----------------------------------------------------------------*
+      *== MODULOS...... :
+      *
+      *   GRAVALOG
+      *----------------------------------------------------------------*
+      *================================================================*
+      *                    * ALTERACOES *
+      *----------------------------------------------------------------*
+ALT1  * PROGRAMADOR.: WELLINGTON SOARES CORDEIRO
+.     * ANALISTA....: IVAN SANCHES
+.     * CUNSULTORIA.: FOURSYS
+.     * DATA........: 27/08/2024
+]     * OBJETIVO....: IMPLEMENTAR A FUNCAO PARA CALCULAR OS TIPOS DE
+ALT1  *               TRANSACAO, DEBITO (SUBTRACAO) E CREDITO (ADICAO)
+      *================================================================*
+      *================================================================*
+       ENVIRONMENT                     DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       CONFIGURATION                   SECTION.
+      *----------------------------------------------------------------*
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+      *----------------------------------------------------------------*
+       INPUT-OUTPUT                    SECTION.
+      *----------------------------------------------------------------*
+       FILE-CONTROL.
+           SELECT CLIENTE2 ASSIGN TO CLIENTE2
+               FILE STATUS IS FS-CLIENTE.
+
+           SELECT LANCAM ASSIGN TO LANCAM
+               FILE STATUS IS FS-LANCAM.
+
+           SELECT RELSAI ASSIGN TO RELSAI
+               FILE STATUS IS FS-RELSAI.
+
+      *================================================================*
+       DATA                            DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       FILE                            SECTION.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+      *        INPUT -  DADOS DO ARQUIVO DE ENTRADA(CLIENTE2)
+      *                               LRECL = 035
+      *----------------------------------------------------------------*
+       FD  CLIENTE2
+           RECORDING MODE IS F.
+       COPY 'BOOKCLI'.
+
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+      *       INPUT  -  DADOS DO ARQUIVO DE ENTRADA(LANCAM)
+      *                               LRECL = 016
+      *----------------------------------------------------------------*
+       FD  LANCAM
+           RECORDING MODE IS F.
+       COPY 'BOOKLANC'.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+      *       OUTPUT -  DADOS DO ARQUIVO DE SAIDA(RELSAI)
+      *                               LRECL = 035
+      *----------------------------------------------------------------*
+       FD  RELSAI
+           RECORDING MODE IS F.
+       COPY 'BOOKREL'.
+      *----------------------------------------------------------------*
+       WORKING-STORAGE                 SECTION.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** INICIO DA WORKING *****'.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           "***** VARIAVEL DE STATUS ***** ".
+      *----------------------------------------------------------------*
+       01 FS-CLIENTE                   PIC 9(002)          VALUE ZEROS.
+       01 FS-LANCAM                    PIC 9(002)          VALUE ZEROS.
+       01 FS-RELSAI                    PIC 9(002)          VALUE ZEROS.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** VARIAVEL DE APOIO ***** '.
+      *----------------------------------------------------------------*
+
+       01 WRK-MSG-ERRO                 PIC X(030)          VALUE SPACES.
+
+       01 WRK-PRG-NOME                 PIC X(008)          VALUE
+           'F2401P06'.
+
+       01 WRK-ARQ-CLI                  PIC X(008)          VALUE
+           'CLIENTE2'.
+
+       01 WRK-ARQ-LAN                  PIC X(008)          VALUE
+           'LANCAM'.
+
+       01 WRK-ARQ-REL                  PIC X(008)          VALUE
+           'RELSAI  '.
+
+       01 WRK-TOTAL-SALDO-LANC         PIC 9(008) COMP-3   VALUE ZEROS.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '*****  VARIAVEL ACUMULADORA ***** '.
+      *----------------------------------------------------------------*
+       01 ACU-LIDO-LAN                 PIC 9(003) COMP-3   VALUE ZEROS.
+       01 ACU-LIDO-CLI                 PIC 9(003) COMP-3   VALUE ZEROS.
+       01 ACU-GRAVA                    PIC 9(003) COMP-3   VALUE ZEROS.
+       01 ACU-CHAVE-ERRADA             PIC 9(003) COMP-3   VALUE ZEROS.
+       01 ACU-TOTAL                    PIC 9(011) COMP-3   VALUE ZEROS.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** AREA DE BOOKS *****'.
+      *----------------------------------------------------------------*
+       COPY BOOKERRO.
+       COPY BOOKLOG.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** FIM DA WORKING *****'.
+      *----------------------------------------------------------------*
+      *================================================================*
+       PROCEDURE                       DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       0000-PRINCIPAL                  SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0100-INICIAR.
+
+           PERFORM 0120-TESTAR-VAZIO.
+
+           PERFORM 0200-PROCESSAR UNTIL FS-CLIENTE EQUAL 10
+                                  AND FS-LANCAM    EQUAL 10.
+
+           PERFORM 0300-FINALIZAR.
+
+       0000-PRINCIPAL-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       0100-INICIAR                    SECTION.
+      *----------------------------------------------------------------*
+
+           OPEN INPUT CLIENTE2
+                INPUT LANCAM.
+           OPEN OUTPUT RELSAI.
+
+           PERFORM 0110-TESTAR-STATUS.
+
+           MOVE WRK-PRG-NOME           TO WRK-PROGRAMA.
+
+       0100-INICIAR-FIM.               EXIT.
+
+      *----------------------------------------------------------------*
+       0110-TESTAR-STATUS              SECTION.
+      *----------------------------------------------------------------*
+
+       0112-TESTAR-STATUS-CLIENTE2.
+
+           IF FS-CLIENTE NOT EQUAL 00
+              MOVE WRK-ARQ-CLI         TO WRK-ARQUIVO
+              MOVE '0112'              TO WRK-SECAO
+              MOVE WRK-ERRO-ABERTURA   TO WRK-MENSAGEM
+              MOVE FS-CLIENTE          TO WRK-STATUS
+              DISPLAY 'ERRO NA ABERTURA DO CLIENTE2'
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+      *----------------------------------------------------------------*
+       0113-TESTAR-STATUS-LANCAM.
+      *----------------------------------------------------------------*
+
+           IF FS-LANCAM NOT EQUAL 00
+              MOVE WRK-ARQ-LAN         TO WRK-ARQUIVO
+              MOVE '0113'              TO WRK-SECAO
+              MOVE WRK-ERRO-ABERTURA   TO WRK-MENSAGEM
+              MOVE FS-LANCAM           TO WRK-STATUS
+              DISPLAY 'ERRO NA ABERTURA DO LANCAM'
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+      *----------------------------------------------------------------*
+       0114-TESTAR-STATUS-RELSAI.
+      *----------------------------------------------------------------*
+
+           IF FS-RELSAI NOT EQUAL 00
+              MOVE  WRK-ARQ-REL        TO WRK-ARQUIVO
+              MOVE '0114'              TO WRK-SECAO
+              MOVE WRK-ERRO-ABERTURA   TO WRK-MENSAGEM
+              DISPLAY 'ERRO NA ABERTURA DO RELSAI'
+           END-IF.
+
+       0110-TESTAR-STATUS-FIM.         EXIT.
+      *----------------------------------------------------------------*
+       0120-TESTAR-VAZIO               SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0130-LER-DADOS.
+
+      *----------------------------------------------------------------*
+       0121-TESTAR-VAZIO-CLIENTE.
+      *----------------------------------------------------------------*
+
+           IF FS-CLIENTE  EQUAL 10
+              DISPLAY  WRK-ARQ-CLIENTE
+              PERFORM 0300-FINALIZAR
+           END-IF.
+
+      *----------------------------------------------------------------*
+       0122-TESTAR-VAZIO-LANCAM.
+      *----------------------------------------------------------------*
+           IF FS-LANCAM  EQUAL 10
+              DISPLAY  WRK-ARQ-LANCAM
+              PERFORM 0300-FINALIZAR
+           END-IF.
+
+       0120-TESTAR-VAZIO-FIM.          EXIT.
+      *----------------------------------------------------------------*
+       0130-LER-DADOS                  SECTION.
+      *----------------------------------------------------------------*
+
+           READ CLIENTE2.
+           IF FS-CLIENTE NOT EQUAL 00 AND NOT EQUAL 10
+              MOVE WRK-ARQ-CLI        TO WRK-ARQUIVO
+              MOVE '0130'             TO WRK-SECAO
+              MOVE WRK-ERRO-LEITURA   TO WRK-MENSAGEM
+              MOVE FS-CLIENTE         TO WRK-STATUS
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+           READ LANCAM.
+           IF FS-LANCAM NOT EQUAL 00 AND NOT EQUAL 10
+              MOVE WRK-ARQ-LANCAM     TO WRK-ARQUIVO
+              MOVE '0130'             TO WRK-SECAO
+              MOVE WRK-ERRO-LEITURA   TO WRK-MENSAGEM
+              MOVE FS-LANCAM          TO WRK-STATUS
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+       0130-LER-DADOS-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       0200-PROCESSAR                  SECTION.
+      *----------------------------------------------------------------*
+           EVALUATE TRUE
+
+           WHEN  REG-CLIENTES-AGCONTA EQUAL REG-LANCAM-AGCONTA
+ALT1          PERFORM 0230-ATUALIZAR-SALDO
+              PERFORM 0201-LER-LANCAM
+
+           WHEN REG-CLIENTES-AGCONTA LESS REG-LANCAM-AGCONTA
+ALT1          PERFORM 0220-GRAVAR-RELSAI
+              PERFORM 0202-LER-CLIENTE
+
+           WHEN OTHER
+
+           DISPLAY "CHAVE ERRADA: " REG-LANCAM
+           ADD 1                          TO  ACU-CHAVE-ERRADA
+           PERFORM 0201-LER-LANCAM
+
+
+           END-EVALUATE.
+
+       0200-PROCESSAR-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       0201-LER-LANCAM                 SECTION.
+      *----------------------------------------------------------------*
+
+           READ LANCAM
+              IF FS-LANCAM EQUAL 10
+                 MOVE HIGH-VALUES TO REG-LANCAM-AGCONTA
+              END-IF.
+              ADD 1                    TO ACU-LIDO-LAN.
+
+       0201-LER-LANCAM-FIM.            EXIT.
+      *----------------------------------------------------------------*
+       0202-LER-CLIENTE                SECTION.
+      *----------------------------------------------------------------*
+
+           READ CLIENTE2
+              ADD 1                     TO ACU-LIDO-CLI.
+
+       0202-LER-CLIENTE-FIM.           EXIT.
+      *----------------------------------------------------------------*
+       0220-GRAVAR-RELSAI              SECTION.
+      *----------------------------------------------------------------*
+           ADD 1                       TO ACU-GRAVA.
+
+           MOVE REG-CLIENTES           TO REG-RELSAI.
+           ADD WRK-TOTAL-SALDO-LANC    TO REG-RELSAI-SALDO.
+
+           WRITE REG-RELSAI.
+
+           MOVE ZEROS                  TO WRK-TOTAL-SALDO-LANC.
+
+       0220-GRAVAR-RELSAI-FIM.         EXIT.
+
+      *----------------------------------------------------------------*
+ALT1   0230-ATUALIZAR-SALDO            SECTION.
+.     *----------------------------------------------------------------*
+.
+.          IF REG-LANCAM-TIPO          EQUAL 'C'
+.             ADD REG-LANCAM-SALDO        TO WRK-TOTAL-SALDO-LANC
+.          ELSE
+.             SUBTRACT REG-LANCAM-SALDO FROM REG-CLIENTES-SALDO
+.                                       GIVING WRK-TOTAL-SALDO-LANC
+.          END-IF.
+.
+ALT1   0230-ATUALIZAR-SALDO-FIM.       EXIT.
+      *----------------------------------------------------------------*
+       0300-FINALIZAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           IF ACU-LIDO-LAN GREATER 0
+              DISPLAY '------- STATISTICA -------'
+              DISPLAY 'TOTAL DE REGISTROS LIDOS CLIENTES:' ACU-LIDO-CLI
+              DISPLAY 'TOTAL DE REGISTROS LIDOS LANCAM:' ACU-LIDO-LAN
+              DISPLAY 'TOTAL DE REGISTROS ERRADO:' ACU-CHAVE-ERRADA
+              DISPLAY 'TOTAL DE REGISTROS GRAVADOS:' ACU-GRAVA
+           END-IF.
+
+      *----------------------------------------------------------------*
+       0310-FINALIZAR-CLIENTE2.
+      *----------------------------------------------------------------*
+
+           CLOSE CLIENTE2.
+
+           IF FS-CLIENTE NOT EQUAL  00
+              MOVE '0310'              TO WRK-SECAO
+              MOVE WRK-ERRO-FECHAMENTO TO WRK-MENSAGEM
+              MOVE FS-CLIENTE          TO WRK-STATUS
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+           GOBACK.
+
+      *----------------------------------------------------------------*
+       0320-FINALIZAR-LANCAM.
+      *----------------------------------------------------------------*
+
+           CLOSE LANCAM.
+
+           IF FS-LANCAM   NOT EQUAL 00
+              MOVE '0320'              TO WRK-SECAO
+              MOVE WRK-ERRO-FECHAMENTO TO WRK-MENSAGEM
+              MOVE FS-LANCAM           TO WRK-STATUS
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+           GOBACK.
+      *----------------------------------------------------------------*
+       0330-FINALIZAR-RELSAI.
+      *----------------------------------------------------------------*
+
+           CLOSE RELSAI.
+
+           IF FS-RELSAI   NOT EQUAL 00
+              MOVE '0330'              TO WRK-SECAO
+              MOVE WRK-ERRO-FECHAMENTO TO WRK-MENSAGEM
+              MOVE FS-RELSAI           TO WRK-STATUS
+              PERFORM 9999-TRATA-ERRO
+           END-IF.
+
+       0300-FINALIZAR-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       9999-TRATA-ERRO                 SECTION.
+      *----------------------------------------------------------------*
+
+           CALL WRK-PROGRAMA-LOGERRO USING WRK-DADOS.
+           GOBACK.
+
+       9999-TRATA-ERRO-FIM.            EXIT.

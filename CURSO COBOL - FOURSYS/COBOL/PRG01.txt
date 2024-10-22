@@ -1,0 +1,172 @@
+      *================================================================*
+       IDENTIFICATION                  DIVISION.
+       PROGRAM-ID.                     PRG01.
+      *================================================================*
+      *   PROGRAMA.....: PRG01
+      *   PROGRAMADOR..: WELLINGTON SOARES CORDEIRO
+      *   ANALISTA.....: IVAN SANCHES
+      *   DATA.........: 10/09/2024
+      *   CONSULTORIA..: FOURSYS
+      *----------------------------------------------------------------*
+      *   OBJETIVO.....: LEITURA DE UM REGISTRO NO ARQUIVO DE DADOS
+      *                  RECEBENDO CHAVE PARM PELO JCL
+      *
+      *
+      *----------------------------------------------------------------*
+      *-------------  ESPECIFICACOES DO PROGRAMA ----------------------*
+      *   ARQUIVO......:
+      *
+      *   DDNAME.......:       TIPO                 BOOK
+      *----------------------------------------------------------------*
+      *   INC'S........:
+      *
+      *----------------------------------------------------------------*
+      *   MODULOS......:                            BOOK....:
+      *
+      *   GRAVALOG                                  BOOKLOG
+      *----------------------------------------------------------------*
+      *----------------- ALTERACOES DO PROGRAMA------------------------*
+      *   PROGRAMADOR..:
+      *   ANALISTA.....:
+      *   CONSULTORIA..:
+      *   DATA.........:
+      *   OBJETIVO.....:
+      *----------------------------------------------------------------*
+      *================================================================*
+       ENVIRONMENT                     DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       CONFIGURATION                   SECTION.
+      *----------------------------------------------------------------*
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       INPUT-OUTPUT                    SECTION.
+      *----------------------------------------------------------------*
+       FILE-CONTROL.
+                 SELECT ARQVSAM ASSIGN TO ARQVSAM
+                 ORGANIZATION  IS INDEXED
+                 ACCESS MODE   IS SEQUENTIAL
+                 RECORD KEY    IS REG-ARQVSAM-CHAVE
+                 FILE STATUS   IS FS-ARQVSAM.
+
+      *----------------------------------------------------------------*
+      * ARQVSAM - CHAVE=CODIGO DO CLIENTES 03 PRIMEIRAS POSICOES
+      *----------------------------------------------------------------*
+      *================================================================*
+       DATA                            DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       FILE                            SECTION.
+      *----------------------------------------------------------------*
+       FD  ARQVSAM.
+       01  REG-ARQVSAM.
+           05 REG-ARQVSAM-CHAVE        PIC X(003).
+           05 REG-ARQVSAM-NOME         PIC X(020).
+           05 REG-ARQVSAM-EMAIL        PIC X(020).
+           05 REG-ARQVSAM-STRE         PIC X(010).
+           05 REG-ARQVSAM-VALASS       PIC 9(005).
+
+      *----------------------------------------------------------------*
+       WORKING-STORAGE                 SECTION.
+      *----------------------------------------------------------------*
+
+       01 WRK-REG-ARQVSAM.
+           05 WRK-REG-ARQVSAM-CHAVE    PIC X(003).
+           05 WRK-REG-ARQVSAM-NOME     PIC X(020).
+           05 WRK-REG-ARQVSAM-EMAIL    PIC X(020).
+           05 WRK-REG-ARQVSAM-STRE     PIC X(010).
+           05 WRK-REG-ARQVSAM-VALASS   PIC 9(005).
+
+       01  FS-ARQVSAM                  PIC 9(002).
+
+       01  ACU-LIDOS-ARQVSAM           PIC 9(002).
+
+      *----------------------------------------------------------------*
+       LINKAGE                         SECTION.
+      *----------------------------------------------------------------*
+
+       01 LNK-DADOS.
+          05 LNK-DIGITO                PIC X(002).
+          05 LNK-CHAVE                 PIC X(003).
+
+      *================================================================*
+       PROCEDURE                       DIVISION USING LNK-DADOS.
+      *================================================================*
+      *----------------------------------------------------------------*
+       0000-PRINCIPAL                  SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0100-INICIALIZAR.
+
+           PERFORM 0200-PROCESSAR UNTIL FS-ARQVSAM NOT EQUAL 0.
+
+           PERFORM 0300-FINALIZAR.
+
+       0000-PRINCIPAL-FIM.              EXIT.
+
+      *----------------------------------------------------------------*
+       0100-INICIALIZAR                SECTION.
+      *----------------------------------------------------------------*
+
+           OPEN INPUT ARQVSAM.
+
+           IF FS-ARQVSAM NOT EQUAL 00
+               DISPLAY "ARQUIVO ARQVSAM NAO FOI ABERTO"
+               GOBACK
+           END-IF.
+           READ ARQVSAM.
+
+           MOVE '004'     TO REG-ARQVSAM-CHAVE.
+           START ARQVSAM               KEY EQUAL REG-ARQVSAM-CHAVE
+           INVALID                     KEY DISPLAY "CHAVE NAO EXISTE"
+           NOT INVALID                 KEY READ ARQVSAM NEXT.
+
+       0100-INICIALIZAR-FIM.           EXIT.
+
+      *----------------------------------------------------------------*
+       0200-PROCESSAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE FS-ARQVSAM
+
+           WHEN 00
+               DISPLAY REG-ARQVSAM
+
+           WHEN 23
+               DISPLAY "CHAVE NAO ENCONTRADA "
+
+           WHEN OTHER
+               DISPLAY "ERRO DE LEITURA " FS-ARQVSAM
+
+           END-EVALUATE.
+
+           READ ARQVSAM NEXT.
+
+           ADD 1                       TO ACU-LIDOS-ARQVSAM.
+
+       0200-PROCESSAR-FIM.             EXIT.
+
+
+      *----------------------------------------------------------------*
+       0300-FINALIZAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           IF ACU-LIDOS-ARQVSAM GREATER ZEROS
+           DISPLAY "=================================================="
+           DISPLAY "TOTAL DE REGISTROS LIDOS " ACU-LIDOS-ARQVSAM
+           DISPLAY "=================================================="
+           DISPLAY "FIM DO PROGRAMA"
+           END-IF.
+
+           CLOSE ARQVSAM.
+
+               IF FS-ARQVSAM NOT EQUAL 00
+                   DISPLAY "ARQUIVO ARQVSAM NAO FOI FECHADO"
+               END-IF.
+
+           GOBACK.
+
+       0300-FINALIZAR-FIM.             EXIT.
+

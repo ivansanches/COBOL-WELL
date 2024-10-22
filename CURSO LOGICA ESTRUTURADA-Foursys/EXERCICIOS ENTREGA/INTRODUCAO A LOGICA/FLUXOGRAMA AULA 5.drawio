@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" modified="2024-06-14T17:48:06.738Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="_6Eaj4p2LevyqPq6UVhO" version="24.5.4" type="device">
+  <diagram name="Página-1" id="iO1YzNbQk5QksGMAr_5I">
+    <mxGraphModel dx="1002" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SY62Z5JX7Aegen_1GBcK-1" target="SY62Z5JX7Aegen_1GBcK-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-1" value="inicio" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="364" y="20" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0.147;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="SY62Z5JX7Aegen_1GBcK-2" target="SY62Z5JX7Aegen_1GBcK-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-2" value="totalSegundos,&amp;nbsp;&lt;div&gt;horas,&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;minutos,segundos&lt;/span&gt;&lt;/div&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+          <mxGeometry x="334" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SY62Z5JX7Aegen_1GBcK-4" target="SY62Z5JX7Aegen_1GBcK-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-4" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;totalSegundos" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" vertex="1" parent="1">
+          <mxGeometry x="364" y="240" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SY62Z5JX7Aegen_1GBcK-6" target="SY62Z5JX7Aegen_1GBcK-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-6" value="&lt;div&gt;horas = totalSegundos / 3600&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;minutos = (totalSegundos % 3600) / 60&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;segundos = (totalSegundos % 3600) % 60&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="341" y="350" width="146" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SY62Z5JX7Aegen_1GBcK-8" target="SY62Z5JX7Aegen_1GBcK-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-8" value="&amp;nbsp; &amp;nbsp;O cronometro tem &quot;,horas,&quot; horas, &quot;,minutos,&quot; minutos e &quot;,segundos,&quot; segundos." style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="334" y="540" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="SY62Z5JX7Aegen_1GBcK-10" value="fim" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="364" y="670" width="100" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

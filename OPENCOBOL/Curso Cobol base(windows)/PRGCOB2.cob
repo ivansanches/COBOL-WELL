@@ -1,0 +1,25 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PRGCOB2.
+      *=====================================
+      *== AUTOR: WELLINGTON SOARES CORDEIRO
+      *== DATA: 26/06/2024
+      *== OBJETIVO: ESTRUTURA DE UM PROGRAMA COBOL
+      *== OBSERVACOES:
+      *== EMPRESA: XPTO
+      *======================================
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       77  WRK-NOME  PIC X(30) VALUE SPACES.
+       77  WRK-IDADE PIC 9(03) VALUE ZEROS.
+
+       PROCEDURE DIVISION.
+           DISPLAY "DIGITE SEU NOME:"
+           ACCEPT WRK-NOME
+           DISPLAY "DIGITE SUA IDADE:"
+           ACCEPT WRK-IDADE
+           DISPLAY "IDADE DIGITADA: " WRK-IDADE
+           DISPLAY "NOME DIGITADO: "  WRK-NOME.
+           STOP RUN.

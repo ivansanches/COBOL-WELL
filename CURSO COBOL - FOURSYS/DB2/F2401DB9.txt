@@ -1,0 +1,231 @@
+       IDENTIFICATION                  DIVISION.
+      *================================================================
+       PROGRAM-ID.                     F2401DB9.
+      *================================================================
+      * PROGRAMA   : F2401DB9
+      * PROGRAMADOR: WELLINGTON SOARES CORDEIRO
+      * ANALISTA   : IVAN SANCHES
+      * CONSULTORIA: FOURSYS
+      * DATA.......: 30 / 09 / 2024
+      *----------------------------------------------------------------
+      * OBJETIVO...: REGRAVACAO DE UM REGISTRO NA TABELA (F2401.FUNC)
+      *
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+      * BASE DE DADOS
+      * TABELAS....:                           INCLUDE/BOOKS
+      *  F2401.FUNC                             BOOKFUNC
+      *
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+      *ARQUIVOS....:
+      * DDNAME.....:            I/O            INCLUDE/BOOKS
+      *
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+      * INC'S......:
+      * BOOKDB2  -> GRAVADB2
+      * BOOKFUNC -> LAYOUT DA TABELA
+      * BOOKERRO -> MENSAGENS DE ERRO
+      *----------------------------------------------------------------
+      *----------------------------------------------------------------
+      * MODULOS....:
+      *  GRAVADB2 -> FORMATACAO E GRAVACAO DE ERROS - DB2
+      *
+      *----------------------------------------------------------------
+      *================================================================
+       ENVIRONMENT                     DIVISION.
+      *================================================================
+       CONFIGURATION                   SECTION.
+      *================================================================
+       DATA                            DIVISION.
+      *================================================================*
+       WORKING-STORAGE                 SECTION.
+      *================================================================*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** INICIO DA WORKING *****'.
+      *================================================================*
+
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '      VARIAVEIS DE APOIO     '.
+      *----------------------------------------------------------------*
+       01 WRK-SQLCODE                  PIC -999            VALUE ZEROS.
+       01 WRK-NULO                     PIC S9(004) COMP    VALUE ZEROS.
+       01 WRK-FRAG-STATUS              PIC 9(002)  COMP-3  VALUE ZEROS.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '      VARIAVEIS DE GRAVACAO     '.
+      *----------------------------------------------------------------*
+       01 WRK-DADOS-FUNC.
+          05 WRK-IDFUNC                PIC 9(009)          VALUE ZEROS.
+          05 WRK-NOMEFUNC              PIC X(030)          VALUE SPACES.
+          05 WRK-DEPTOFUNC             PIC X(003)          VALUE SPACES.
+          05 WRK-SALFUNC               PIC 9(003)V99       VALUE ZEROS.
+          05 WRK-FILHOSFUNC            PIC 9(009)          VALUE ZEROS.
+          05 WRK-ADMISFUNC             PIC X(010)          VALUE SPACES.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '          BOOKS           '.
+      *----------------------------------------------------------------*
+
+       COPY BOOKDB2.
+
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '        AREA DB2          '.
+      *----------------------------------------------------------------*
+
+           EXEC SQL
+              INCLUDE SQLCA
+           END-EXEC.
+
+           EXEC SQL
+              INCLUDE BOOKFUNC
+           END-EXEC.
+      *----------------------------------------------------------------*
+       01  FILLER                      PIC X(050)          VALUE
+           '***** FIM DA WORKING *****'.
+      *================================================================
+       PROCEDURE                       DIVISION.
+      *================================================================
+      *---------------------------------------------------------------
+       0000-PRINCIPAL                  SECTION.
+      *---------------------------------------------------------------
+
+           PERFORM 0100-INICIALIZAR.
+
+           PERFORM 0200-PROCESSAR.
+
+           PERFORM 0300-FINALIZAR.
+
+           GOBACK.
+
+      *----------------------------------------------------------------*
+       0000-99-FIM.                    EXIT.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       0100-INICIALIZAR                SECTION.
+      *----------------------------------------------------------------*
+
+           ACCEPT WRK-DADOS-FUNC.
+
+           PERFORM 0110-VERIFICACAO-NULO.
+
+           IF WRK-FRAG-STATUS          EQUAL ZEROS
+
+              MOVE WRK-IDFUNC          TO DB2-IDFUNC
+              MOVE WRK-NOMEFUNC        TO DB2-NOMEFUNC
+              MOVE WRK-DEPTOFUNC       TO DB2-DEPTOFUNC
+              MOVE WRK-SALFUNC         TO DB2-SALFUNC
+              MOVE WRK-FILHOSFUNC      TO DB2-FILHOSFUNC
+              MOVE WRK-ADMISFUNC       TO DB2-ADMISFUNC
+
+           ELSE
+
+              DISPLAY "DADOS INSERIDOS INCONSITENTES"
+
+           END-IF.
+
+      *----------------------------------------------------------------*
+       0100-99-FIM.                    EXIT.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       0110-VERIFICACAO-NULO           SECTION.
+      *----------------------------------------------------------------*
+
+           EVALUATE TRUE
+              WHEN WRK-IDFUNC          IS NOT NUMERIC
+                 DISPLAY 'ID NAO NUMERICO'
+                 MOVE 1                TO WRK-FRAG-STATUS
+              WHEN WRK-NOMEFUNC        EQUAL SPACES
+                 DISPLAY 'NOME EM BRANCO'
+                 MOVE 1                TO WRK-FRAG-STATUS
+              WHEN WRK-DEPTOFUNC       EQUAL SPACES
+                 DISPLAY 'DEPTO EM BRANCO'
+                 MOVE 1                TO WRK-FRAG-STATUS
+              WHEN WRK-SALFUNC         IS NOT NUMERIC
+                 DISPLAY 'SALARIO NAO NUMERICO'
+                 MOVE 1                TO WRK-FRAG-STATUS
+              WHEN WRK-ADMISFUNC       EQUAL SPACES
+                 DISPLAY 'ADMIS EM BRANCO'
+                 MOVE 1                TO WRK-FRAG-STATUS
+           END-EVALUATE.
+
+      *----------------------------------------------------------------*
+       0110-99-FIM.                    EXIT.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       0200-PROCESSAR                  SECTION.
+      *----------------------------------------------------------------*
+
+      *    EXEC SQL
+      *       UPDATE F2401.FUNC
+      *        SET
+      *           NOMEFUNC   =:DB2-NOMEFUNC
+      *          ,DEPTOFUNC  =:DB2-DEPTOFUNC
+      *          ,SALFUNC    =:DB2-SALFUNC
+      *          ,FILHOSFUNC =:DB2-FILHOSFUNC
+      *          ,ADMISFUNC  =:DB2-ADIMSFUNC
+      *       WHERE IDFUNC   =:DB2-IDFUNC
+      *    END-EXEC.
+
+           EXEC SQL
+              UPDATE F2401.FUNC
+              SET NOMEFUNC=:DB2-NOMEFUNC,DEPTOFUNC=:DB2-DEPTOFUNC,
+                  SALFUNC=:DB2-SALFUNC,FILHOSFUNC=:DB2-FILHOSFUNC,
+                  ADMISFUNC=:DB2-ADMISFUNC
+              WHERE IDFUNC = :DB2-IDFUNC
+           END-EXEC.
+
+           IF WRK-NULO                 EQUAL -1
+              MOVE 0                   TO DB2-FILHOSFUNC
+           END-IF.
+
+           IF (SQLCODE NOT EQUAL 0 AND +180 AND +100)OR
+              (SQLWARN0 EQUAL 'W')
+              MOVE SQLCODE             TO WRK-SQLCODE
+              MOVE "F2401.FUNC"        TO WRK-TABELA-DB2
+              MOVE "F2401DB7"          TO WRK-PROGRAMA-DB2
+              MOVE WRK-SQLCODE         TO WRK-SQLCODE-DB2
+              DISPLAY "ERRO NA REGRAVACAO" WRK-SQLCODE
+              PERFORM 9998-TRATA-DB2
+           END-IF.
+
+           IF SQLCODE                  EQUAL -180
+                 DISPLAY "DATA INSERIDA INVALIDA"
+                 DISPLAY WRK-SQLCODE
+           END-IF.
+
+           IF SQLCODE                  EQUAL -803
+                 DISPLAY "CHAVE DO REGISTRO JA EXISTE"
+                 DISPLAY WRK-SQLCODE
+           END-IF.
+
+           IF SQLCODE                  EQUAL ZEROS
+                 DISPLAY "REGISTRO ALTERADO:" REG-FUNC
+           END-IF.
+
+      *----------------------------------------------------------------*
+       0200-99-FIM.                    EXIT.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       0300-FINALIZAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           DISPLAY ' FIM DE PROCESSO '.
+
+      *----------------------------------------------------------------*
+       0300-99-FIM.                    EXIT.
+      *----------------------------------------------------------------*
+      *----------------------------------------------------------------*
+       9998-TRATA-DB2                  SECTION.
+      *----------------------------------------------------------------*
+
+           CALL WRK-PROGRAMA-LOGDB2    USING WRK-DADOS-DB2.
+           GOBACK.
+
+      *----------------------------------------------------------------*
+       9998-99-FIM.             EXIT.
+      *----------------------------------------------------------------*

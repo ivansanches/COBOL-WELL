@@ -1,0 +1,12 @@
+//F2402CRI JOB '',CLASS=C,MSGCLASS=X,NOTIFY=F2402,TIME=(0,02)           00010001
+//CRIAR    EXEC PGM=ICEGENER                                            00020000
+//SYSPRINT DD SYSOUT=*                                                  00030000
+//SYSUT1   DD *                                                         00040000
+1234345610JOAO RIBEIRO        10000000C                                 00050002
+2345000060LUCAS JONES         05000000D                                 00060002
+1234000008CARLOS APOLINARIO   00235600C                                 00070002
+2345000045SILVIO SANTOS       80000000C                                 00080002
+1234000006PAULO CAMARGO       00650000D                                 00090002
+//SYSUT2   DD DSN=GR.F2402.SORTLANC,DISP=(NEW,CATLG,DELETE),            00120002
+//         SPACE=(TRK,(1,0),RLSE),                                      00130000
+//         DCB=(LRECL=39,RECFM=FB)                                      00140002

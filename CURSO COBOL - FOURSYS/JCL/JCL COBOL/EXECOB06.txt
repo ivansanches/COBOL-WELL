@@ -1,0 +1,17 @@
+//F2401E06 JOB 'EXECUT',CLASS=C,MSGCLASS=X,NOTIFY=&SYSUID,TIME=(0,01)
+//****************************************************
+//**       APAGA O RELSAI                            *
+//****************************************************
+//STEP001  EXEC PGM=IEFBR14
+//ARQUIVO  DD   DSN=GR.F2401.RELSAI,DISP=(MOD,DELETE,DELETE),
+//         SPACE=(TRK,(1,1),RLSE),UNIT=SYSDA
+//****************************************************
+//STEP002  EXEC PGM=F2401P06
+//STEPLIB  DD DSN=GR.GERAL.LOADLIB,DISP=SHR
+//SYSOUT   DD SYSOUT=*
+//CLIENTE2 DD DSN=GR.F2401.CLIENTE2,DISP=SHR
+//LANCAM   DD DSN=GR.F2401.LANCAM,DISP=SHR
+//LOGERROS DD DSN=GR.F2401.LOGERROS,DISP=SHR
+//RELSAI   DD DSN=GR.F2401.RELSAI,DISP=(NEW,CATLG,DELETE),
+//         SPACE=(TRK,(1,1),RLSE),UNIT=SYSDA,
+//         DCB=(LRECL=35,RECFM=FB,BLKSIZE=0)

@@ -1,0 +1,9 @@
+//SORTEX01 JOB '',CLASS=C,MSGCLASS=X,NOTIFY=F2401,TIME=(0,02)           00010003
+//STEP1    EXEC  PGM=SORT                                               00020000
+//SORTIN   DD    DSN=GR.F2401.ARQENT,DISP=SHR                           00040000
+//SORTOUT  DD    DSN=GR.F2401.ARQSAI1,DISP=(NEW,CATLG,DELETE),          00050002
+//         SPACE=(TRK,(1,1),RLSE),UNIT=SYSDA,                           00050102
+//         DCB=(LRECL=71,RECFM=FB,BLKSIZE=0)                            00050202
+//SYSOUT   DD    SYSOUT=*                                               00051001
+//SYSIN    DD    *                                                      00060000
+ SORT FIELDS=(21,09,CH,A)                                               00070000

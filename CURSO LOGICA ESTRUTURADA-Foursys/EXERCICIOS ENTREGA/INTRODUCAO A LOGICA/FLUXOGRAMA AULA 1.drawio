@@ -1,0 +1,47 @@
+<mxfile host="app.diagrams.net" modified="2024-06-14T17:19:41.286Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="CxsZIGnfxhMq8-0S6-GL" version="24.5.4" type="device">
+  <diagram id="eF0rS28qrV-jBaZvovJZ" name="Página-1">
+    <mxGraphModel dx="1002" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="hHmEHS8GWGKajMJoRnmc-1" target="hHmEHS8GWGKajMJoRnmc-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-1" value="Inicio" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="364" y="70" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.487;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="hHmEHS8GWGKajMJoRnmc-2" target="hHmEHS8GWGKajMJoRnmc-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="414" y="315" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-2" value="&amp;nbsp; &amp;nbsp; numero1, numero2,&amp;nbsp;&lt;div&gt;soma&lt;/div&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" parent="1" vertex="1">
+          <mxGeometry x="339" y="180" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hHmEHS8GWGKajMJoRnmc-4" target="hHmEHS8GWGKajMJoRnmc-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-4" value="numero1, numero2, soma" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" parent="1" vertex="1">
+          <mxGeometry x="364" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hHmEHS8GWGKajMJoRnmc-7" target="hHmEHS8GWGKajMJoRnmc-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-7" value="soma = numero1 + numero2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="364" y="430" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-8" value="O resultado da soma entre &quot;,numero1,&quot; e &quot;,numero2,&quot; é de : &quot;, soma" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="340" y="554" width="150" height="116" as="geometry" />
+        </mxCell>
+        <mxCell id="hHmEHS8GWGKajMJoRnmc-11" value="fim" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="365" y="740" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XK2EgP2D-PZqbClCWe-x-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="hHmEHS8GWGKajMJoRnmc-8" target="hHmEHS8GWGKajMJoRnmc-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

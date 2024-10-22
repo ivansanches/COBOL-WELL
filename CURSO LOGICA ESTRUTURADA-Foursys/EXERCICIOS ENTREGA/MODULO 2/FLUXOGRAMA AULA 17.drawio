@@ -1,0 +1,89 @@
+<mxfile host="app.diagrams.net" modified="2024-06-21T18:23:42.834Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" etag="1Y7lZ7sAlna4geJoExVi" version="24.6.1" type="device">
+  <diagram name="Página-1" id="iQprLt_ROJIoTkR71a6D">
+    <mxGraphModel dx="963" dy="711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-1" target="xZOEGwBpBfLOQARIaAnr-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-1" value="inicio" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="363" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-2" target="xZOEGwBpBfLOQARIaAnr-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-2" value="vendas[13],&lt;div&gt;valorVenda,&lt;/div&gt;&lt;div&gt;indice,&lt;/div&gt;&lt;div&gt;mes&lt;/div&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+          <mxGeometry x="349" y="110" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-8" target="xZOEGwBpBfLOQARIaAnr-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-8" value="informe o mes&lt;div&gt;(mes)&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="363" y="390" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-10" target="xZOEGwBpBfLOQARIaAnr-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-10" value="mes&amp;nbsp;&lt;a style=&quot;color: rgb(64, 7, 162); text-decoration-color: rgb(14, 44, 137); text-underline-offset: 3px; border-radius: 2px; cursor: pointer; background: rgb(226, 233, 255); font-family: -apple-system, Roboto, SegoeUI, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Meiryo UI&amp;quot;, Meiryo, &amp;quot;Arial Unicode MS&amp;quot;, sans-serif; font-size: 16px; text-align: left; text-decoration-style: dotted !important;&quot; data-tgpsgid=&quot;d_anstgsen0&quot; href=&quot;https://www.bing.com/ck/a?!&amp;amp;&amp;amp;p=c385127746d9d87aJmltdHM9MTcxODkyODAwMCZpZ3VpZD0wOGVjZmViMi1lMTZjLTY1YjUtMGJjMi1lYTI5ZTBkZDY0MmImaW5zaWQ9NTkyMw&amp;amp;ptn=3&amp;amp;ver=2&amp;amp;hsh=3&amp;amp;fclid=08ecfeb2-e16c-65b5-0bc2-ea29e0dd642b&amp;amp;psq=simbolo+diferente&amp;amp;u=a1aHR0cHM6Ly93d3cuZnJlZWNvZGVjYW1wLm9yZy9wb3J0dWd1ZXNlL25ld3Mvby1zaW5hbC1kZS1kaWZlcmVudGUtY29tby1mYXplci1vLXNpbWJvbG8tZGUtZGlmZXJlbmNhLw&amp;amp;ntb=1&quot; target=&quot;_blank&quot; data-tg-citations=&quot;1&quot; class=&quot;sh-anchor&quot;&gt;≠&lt;/a&gt;&amp;nbsp;99" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.loop_limit;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="364" y="525" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-12" target="xZOEGwBpBfLOQARIaAnr-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-16" value="VERDADE" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="xZOEGwBpBfLOQARIaAnr-15">
+          <mxGeometry x="-0.459" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-12" value="mes&amp;gt;=1 e mes&amp;lt;=12" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="364" y="620" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-14" target="xZOEGwBpBfLOQARIaAnr-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-14" value="&quot;informe o valor da venda&quot;&lt;div&gt;(valorVenda)&lt;br&gt;&lt;/div&gt;&lt;div&gt;&quot;Infrome o mes da venda &quot;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;vendas[mes] = vendas[mes] + valorVendas&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="308" y="810" width="210" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-17" value="&quot;informe um mes valido!&quot;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="578" y="640" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-24" target="xZOEGwBpBfLOQARIaAnr-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-24" value="&quot;valor acumulado por mes" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="303" y="980" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-41" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-28" target="xZOEGwBpBfLOQARIaAnr-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-28" value="indice de 0 a &amp;lt;12&amp;nbsp;&lt;div&gt;indice++&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;(&lt;span style=&quot;background-color: initial;&quot;&gt;vendas[indice] = 0)&lt;/span&gt;&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="248" y="220" width="330" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-29" target="xZOEGwBpBfLOQARIaAnr-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-29" value="indice de 1 a &amp;lt;13&amp;nbsp;&lt;div&gt;indice++&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="249" y="1110" width="330" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-31" target="xZOEGwBpBfLOQARIaAnr-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-31" value="&quot;mes, indice,: vendas[indice]&amp;nbsp;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="363" y="1300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-33" value="fim" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="363" y="1420" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="xZOEGwBpBfLOQARIaAnr-12" target="xZOEGwBpBfLOQARIaAnr-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xZOEGwBpBfLOQARIaAnr-38" value="FALSO" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="xZOEGwBpBfLOQARIaAnr-37">
+          <mxGeometry x="-0.003" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

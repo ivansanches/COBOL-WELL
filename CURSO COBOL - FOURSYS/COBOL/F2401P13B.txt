@@ -1,0 +1,137 @@
+      *================================================================*
+       IDENTIFICATION                  DIVISION.
+       PROGRAM-ID.                     F240113B.
+      *================================================================*
+      *================================================================
+      * PROGRAMA...: F240113B
+      * PROGRAMADOR: WELLINGTON SOARES CORDEIRO
+      * ANALISTA...: IVAN
+      * CONSULTORIA: FOURSYS
+      * DATA.......: 02/09/2024
+      *----------------------------------------------------------------
+      * OBJETIVO...: RECEBE UMA CHAVE DO JCL PELO PARM E
+      *              LE O ARQUIVO ARQVSAM A PARTIR DA CHAVA RECEBIDA
+      *----------------------------------------------------------------
+      * ARQUIVOS               I/O                  INCLUDE/BOOK
+      * ARQVSAM                I                       ARQVSAM
+      *----------------------------------------------------------------*
+      * VSAM- EXEMPLO DE LEITURA DE TODO O ARQUIVO
+      *----------------------------------------------------------------*
+      *================================================================*
+       ENVIRONMENT                     DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       CONFIGURATION                   SECTION.
+      *----------------------------------------------------------------*
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+      *----------------------------------------------------------------*
+       INPUT-OUTPUT                    SECTION.
+      *----------------------------------------------------------------*
+       FILE-CONTROL.
+           SELECT ARQVSAM ASSIGN TO ARQVSAM
+             ORGANIZATION  IS INDEXED
+             ACCESS MODE   IS SEQUENTIAL
+             RECORD KEY    IS REG-ARQVSAM-CHAVE
+             FILE STATUS   IS FS-ARQVSAM.
+
+      *----------------------------------------------------------------*
+      *     ARQVSAM - CHAVE -> CODIGO DO CLIENTE 03 PRIMEIRAS POSICOES
+      *----------------------------------------------------------------*
+
+      *================================================================*
+       DATA                            DIVISION.
+      *================================================================*
+      *----------------------------------------------------------------*
+       FILE                            SECTION.
+      *----------------------------------------------------------------*
+       FD  ARQVSAM.
+       COPY 'BOOKVSA'.
+
+      *----------------------------------------------------------------*
+       WORKING-STORAGE                 SECTION.
+      *----------------------------------------------------------------*
+       01  FS-ARQVSAM                  PIC  9(002).
+       01  ACU-LIDOS                   PIC  9(002) COMP-3  VALUE ZEROS.
+       01  ACU-CHAVE                   PIC  9(002) COMP-3  VALUE ZEROS.
+      *----------------------------------------------------------------*
+       LINKAGE                         SECTION.
+      *----------------------------------------------------------------*
+       01  LNK-DADOS.
+           05 LNK-DIGITO               PIC  X(002).
+           05 LNK-CHAVE                PIC  X(003).
+           05 LNK-CHAVE2               PIC  X(003).
+      *================================================================*
+       PROCEDURE                       DIVISION USING LNK-DADOS.
+      *================================================================*
+      *----------------------------------------------------------------*
+       0001-PRINCIPAL                  SECTION.
+      *----------------------------------------------------------------*
+
+           PERFORM 0100-INICIALIZAR.
+
+           PERFORM 0200-PROCESSAR UNTIL FS-ARQVSAM NOT EQUAL 00.
+
+           PERFORM 0300-FINALIZAR.
+
+       0001-PRINCIPAL-FIM.             EXIT.
+
+      *----------------------------------------------------------------*
+       0100-INICIALIZAR                SECTION.
+      *----------------------------------------------------------------*
+
+           OPEN INPUT ARQVSAM.
+
+           IF FS-ARQVSAM NOT EQUAL 0
+              DISPLAY "ARQUIVO ARQVSAM NAO FOI ABERTO"
+              GOBACK
+           END-IF.
+
+           MOVE LNK-CHAVE              TO REG-ARQVSAM-CHAVE.
+
+           START ARQVSAM KEY EQUAL REG-ARQVSAM-CHAVE
+              INVALID KEY
+                 DISPLAY "CHAVE NAO EXISTE"
+              NOT INVALID KEY
+                 READ ARQVSAM NEXT.
+
+       0100-INICIALIZAR-FIM.           EXIT.
+
+      *----------------------------------------------------------------*
+       0200-PROCESSAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           ADD 1                    TO ACU-LIDOS
+
+           IF FS-ARQVSAM NOT EQUAL 00
+              DISPLAY "ERRO NA LEITURA " FS-ARQVSAM
+              GOBACK
+           ELSE
+              IF REG-ARQVSAM-CHAVE NOT GREATER LNK-CHAVE2
+                 DISPLAY REG-ARQVSAM
+                 ADD 1              TO ACU-CHAVE
+              END-IF
+           END-IF.
+
+           READ ARQVSAM NEXT.
+
+       0200-PROCESSAR-FIM.             EXIT.
+      *----------------------------------------------------------------*
+       0300-FINALIZAR                  SECTION.
+      *----------------------------------------------------------------*
+
+           CLOSE ARQVSAM.
+
+           IF FS-ARQVSAM NOT EQUAL 0
+              DISPLAY "ERRO NO FECHAMENTO DO ARQUIVO ARQVSAM"
+           END-IF.
+
+           IF ACU-LIDOS GREATER 0
+              DISPLAY "====== STATISTICA ======"
+              DISPLAY "TOTAL DE REGISTROS LIDOS  : " ACU-LIDOS
+              DISPLAY "TOTAL DE REGISTROS VALIDOS: " ACU-CHAVE
+           END-IF.
+
+           GOBACK.
+
+       0300-FINALIZAR-FIM.             EXIT.

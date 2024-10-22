@@ -1,0 +1,7 @@
+//F2401S01 JOB '',CLASS=C,MSGCLASS=X,NOTIFY=F2401,TIME=(0,2)            00010003
+//STEP1    EXEC  PGM=SORT                                               00020002
+//SYSOUT   DD    SYSOUT=*                                               00030002
+//SORTIN   DD    DSN=GR.F2401.SORTBASE,DISP=SHR                         00040002
+//SORTOUT  DD    SYSOUT=*                                               00050002
+//SYSIN    DD    *                                                      00060002
+ SORT FIELDS=(1,15,CH,A)                                                00070002

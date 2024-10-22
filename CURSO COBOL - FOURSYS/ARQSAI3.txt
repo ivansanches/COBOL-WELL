@@ -1,0 +1,8 @@
+CARLOS ALBERTO      CARLOS@UOL.COM.BR             JAVA           001010
+SILVIO SANTOS       SILVIO@BOL.COM.BR             COBMF          002020
+PAULA DE SOUZA      PAULAD@REL.COM.BR             JAVA           003030
+IVES GRANDRA        IVESGR@BOL.COM.BR             JAVA           004040
+LUIS CALDAS         LUISCA@REL.COM.BR             COBMF          005050
+SERGIO BUARQUE      SERGIOBBOL.COM.BR             JAVA           006060
+ARTHUR CARRILLO     ARTHUR@UOL.COM.BR             JAVA           007070
+JOSUE ALMEIDA       JOSUEA@REL.COM.BR             COBMF          008080
