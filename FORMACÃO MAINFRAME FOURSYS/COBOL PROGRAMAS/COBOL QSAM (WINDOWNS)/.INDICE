@@ -1,3 +1,2 @@
 PRGARQ1
-PRGARQ3 - Programa faz a leitura de registros do arquivo Clientes [https://github.com/ivansanches/COBOL-WELL/blob/main/FORMAC%C3%83O%20MAINFRAME%20FOURSYS/ARQUIVOS%20COBOL/CLIENTES.txt] 
-e usa o BOOK  
+PRGARQ3 - Programa faz a leitura de registros do arquivo Clientes com balance line "pasta arquivos" e usa o BOOK Bookcli "pasta books"
